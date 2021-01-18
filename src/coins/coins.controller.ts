@@ -1,31 +1,49 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CoinsService } from './coins.service';
+import { Coin } from './entities/coin.entity';
 
 @Controller('coins')
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
   @Get()
-  getAll() {
-    return `This will return all coins`;
+  getAll(): Coin[] {
+    return this.coinsService.getAll();
+  }
+
+  @Get('/search')
+  search(@Query('name') coinName: string) {
+    return `We are searching for a movie with a name ${coinName}`;
   }
 
   @Get('/:id')
-  getOne(@Param('id') coinId: string) {
-    return `This will return one coin id ${coinId}`;
+  getOne(@Param('id') coinId: string): Coin {
+    return this.coinsService.getOne(coinId);
   }
 
   @Post()
-  create() {
-    return `This will create a coin`;
+  create(@Body() coinData) {
+    return this.coinsService.create(coinData);
   }
 
   @Delete('/:id')
   remove(@Param('id') coinId: string) {
-    return `This will delete a coin id ${coinId}`;
+    return this.coinsService.deleteOne(coinId);
   }
 
   @Patch('/:id')
-  patch(@Param('id') coinId: string) {
-    return `This will patch a coin with the id ${coinId}`;
+  patch(@Param('id') coinId: string, @Body() updateData) {
+    return {
+      id: coinId,
+      ...updateData,
+    };
   }
 }
