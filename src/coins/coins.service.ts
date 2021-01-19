@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Coin } from './entities/coin.entity';
 
 @Injectable()
@@ -10,11 +10,16 @@ export class CoinsService {
   }
 
   getOne(id: string): Coin {
-    return this.coins.find((coin) => coin.id === +id);
+    const coin = this.coins.find((coin) => coin.id === +id);
+    if (!coin) {
+      throw new NotFoundException(`Coin with ID:${id} not found`);
+    }
+    return coin;
   }
 
   deleteOne(id: string): boolean {
-    this.coins.filter((coin) => coin.id !== +id);
+    this.getOne(id);
+    this.coins = this.coins.filter((coin) => coin.id !== +id);
     return true;
   }
 
@@ -23,5 +28,11 @@ export class CoinsService {
       id: this.coins.length + 1,
       ...coinData,
     });
+  }
+
+  update(id: string, updateData) {
+    const coin = this.getOne(id);
+    this.deleteOne(id);
+    this.coins.push({ ...coin, ...updateData });
   }
 }

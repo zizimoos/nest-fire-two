@@ -41,9 +41,6 @@ export class CoinsController {
 
   @Patch('/:id')
   patch(@Param('id') coinId: string, @Body() updateData) {
-    return {
-      id: coinId,
-      ...updateData,
-    };
+    return this.coinsService.update(coinId, updateData);
   }
 }
