@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CoinsService } from './coins.service';
+import { CreateCoinDto } from './dto/create-coin.dto';
 import { Coin } from './entities/coin.entity';
 
 @Controller('coins')
@@ -25,22 +26,22 @@ export class CoinsController {
   }
 
   @Get('/:id')
-  getOne(@Param('id') coinId: string): Coin {
+  getOne(@Param('id') coinId: number): CreateCoinDto {
     return this.coinsService.getOne(coinId);
   }
 
   @Post()
-  create(@Body() coinData) {
+  create(@Body() coinData: CreateCoinDto) {
     return this.coinsService.create(coinData);
   }
 
   @Delete('/:id')
-  remove(@Param('id') coinId: string) {
+  remove(@Param('id') coinId: number) {
     return this.coinsService.deleteOne(coinId);
   }
 
   @Patch('/:id')
-  patch(@Param('id') coinId: string, @Body() updateData) {
+  patch(@Param('id') coinId: number, @Body() updateData) {
     return this.coinsService.update(coinId, updateData);
   }
 }

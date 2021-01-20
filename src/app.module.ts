@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { CoinsController } from './coins/coins.controller';
-import { CoinsService } from './coins/coins.service';
+import { CoinsModule } from './coins/coins.module';
 
 @Module({
-  imports: [],
-  controllers: [CoinsController],
-  providers: [CoinsService],
+  imports: [CoinsModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

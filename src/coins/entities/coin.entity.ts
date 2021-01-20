@@ -1,6 +1,6 @@
 export class Coin {
   id: number;
-  title: string;
-  year: number;
+  name: string;
+  price: number;
   genres: string[];
 }
