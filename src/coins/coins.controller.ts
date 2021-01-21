@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { CoinsService } from './coins.service';
 import { CreateCoinDto } from './dto/create-coin.dto';
+import { UpdateCoinDto } from './dto/update-coin.dto';
 import { Coin } from './entities/coin.entity';
 
 @Controller('coins')
@@ -41,7 +42,7 @@ export class CoinsController {
   }
 
   @Patch('/:id')
-  patch(@Param('id') coinId: number, @Body() updateData) {
+  patch(@Param('id') coinId: number, @Body() updateData: UpdateCoinDto) {
     return this.coinsService.update(coinId, updateData);
   }
 }

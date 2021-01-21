@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCoinDto } from './dto/create-coin.dto';
+import { UpdateCoinDto } from './dto/update-coin.dto';
 import { Coin } from './entities/coin.entity';
 
 @Injectable()
@@ -31,7 +32,7 @@ export class CoinsService {
     });
   }
 
-  update(id: number, updateData) {
+  update(id: number, updateData: UpdateCoinDto) {
     const coin = this.getOne(id);
     this.deleteOne(id);
     this.coins.push({ ...coin, ...updateData });
