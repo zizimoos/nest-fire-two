@@ -14,7 +14,7 @@ export class CoinsService {
   getOne(id: number): Coin {
     const coin = this.coins.find((coin) => coin.id === id);
     if (!coin) {
-      throw new NotFoundException(`Coin with ID:${id} not found`);
+      throw new NotFoundException(`Coins with ID:${id} not found`);
     }
     return coin;
   }
